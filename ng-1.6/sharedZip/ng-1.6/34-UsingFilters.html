@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Using Filters</title>
+</head>
+<body>
+    <div data-ng-controller="TrainersCntrl">
+        <label>Search : </label> <input type="text" data-ng-model="search.$"/>
+        <hr/>
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Technology</th>
+            </tr>
+            <tr data-ng-repeat="trainer in trainers | filter:search">
+                <td>{{ trainer.name | uppercase }}</td>
+                <td>{{ trainer.technology | uppercase }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div>{{ ( trainers | filter:search.$ ).length }} out of {{ trainers.length }} trainers</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.factory('TrainerService',function(){
+        var trainers = [
+            {
+                name:"Karthik",
+                technology:"JavaScript Stack"
+            },
+            {
+                name:"Anil",
+                technology:"JEE"
+            },
+             {
+                name:"Hema",
+                technology:"Testing"
+            },
+             {
+                name:"Ganesh",
+                technology:"Dotnet"
+            },
+            {
+                name:"Veena",
+                technology:"MainFrame"
+            },
+            {
+                name:"Abishek",
+                technology:"Dotnet"
+            },
+            {
+                name:"Shilpa",
+                technology:"Testing"
+            },
+            {
+                name:"Latha",
+                technology:"JavaScript Stack"
+            }
+        ];
+        return trainers;
+    });
+
+    var TrainersCntrl = ['$scope','TrainerService',function($scope,TrainerService){
+        $scope.trainers = TrainerService;
+    }];
+
+    app.controller("TrainersCntrl",TrainersCntrl);
+</script>
+</html>
+<!--
+search.$ : All the fields(name,technology)
+search.name : particular fields(name)
+
+-->

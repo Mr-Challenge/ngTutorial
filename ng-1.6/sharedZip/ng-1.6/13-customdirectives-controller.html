@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS Custom Directives with Controllers</title>
+</head>
+<body>
+    <h1>AngularJS Custom Directives with Controllers</h1>
+    <hr/>
+    <cg-directive></cg-directive> <!-- Takes Root Scope -->
+    <div data-ng-controller="DirectiveCntrl">
+        <cg-directive></cg-directive> <!-- Takes Child Scope but override the model values-->
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.directive('cgDirective',function(){
+        return {
+            template:'<h1>{{ companyName }}</h1>',
+            /*Directive Controller gets higher preference and it override the model value from the child Scope*/
+            controller:['$scope',function($scope){
+                if($scope.$id === 1) //Change the Value only if it is placed in RootScope
+                    $scope.companyName = 'Microsoft';
+            }],
+            link:function(scope,element,attrs){
+                console.log('Directive Scope id : '+ scope.$id);
+            },
+            replace:true
+        }
+    });
+
+    app.controller('DirectiveCntrl',['$scope',function($scope){
+        $scope.companyName = 'Capgemini';
+        $scope.city = 'Bangalore';
+        console.log('Controller Scope id : '+ $scope.$id);
+    }]);
+</script>
+</html>
+<!--
+    Directives should not depend on controllers for its value, it is best practice to have its own controller
+-->

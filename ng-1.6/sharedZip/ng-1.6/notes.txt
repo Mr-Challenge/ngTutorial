@@ -1,0 +1,191 @@
+Code Snippet Generation
+-----------------------
+html>head>title{Angular 1.6}^body>div#main{Div with id Main}+div.sty{Div with the class sty}+div[data-company="Capgemini"]{Div with Attribute}+div>p{para-$}*5
+
+Create HTML5 structure
+----------------------
+!
+
+table Generation
+---------------
+table>(tr>td{td-$}*3)*3 
+
+class Employee{}
+
+class EmployeeService{
+    public EmployeeService(Employee e){
+
+    }
+}
+
+
+UPPERCASE
+lowercase
+camelCase
+PascalCase
+kebab-case : this-is-my-test
+
+
+To run XHR without a webserver
+------------------------------
+Close all the Chrome instances
+From Run Window (CTRL + R )
+chrome.exe --allow-file-access-from-files -disable-web-security
+
+AngularJS 1.X
+------------
+
+Angular Fundamentals
+Directives
+Filters
+Services
+Routing
+
+Node Fundamentals
+Unit Testing(using Jasmine and Karma)
+
+Regular Expressions in JavaScript
+----------------------------------
+Pattern Matching
+In JavaScript regex is a native object
+
+var i = 5; // typeof(i) //number
+var date = new Date() // Date object
+var regex = /^Expression$/  /* ^:Beginning   $:Ending */
+
+\d : Single Digit  Ex: /^\d$/ : It will match : 7
+\w : AlphaNumeric  Ex : /^\w$/ : It will match : 4, Y, 
+\s : Space  : match a space
+.  : Any Character  
+
+Quantifiers
+------------
++ : 1, >1
+* : 0,1,>1
+? : 0, 1
+{n} : n number of digits
+{min,max} : \d{4,6} : minimum 4 and max 6 digits : 6567, 76777, 574576
+
+Chrome Console Window
+---------------------
+
+var regex = /^\d{6}$/
+regex.test('560066') //true
+
+
+Valid Email Address
+--------------------
+karthik@yahoo.com
+karthik_123@yahoo.in
+karthik_123@yahoo.com
+karthik_123@123greetings.com
+karthik_123@yahoo.co.in
+karthik.muthukrishnan@capgemini.com
+
+
+var regex = /^\w+(\.\w+)?@\w+(\.\w{2,3}){1,2}$/;
+regex.test('karthik.muthukrishnan@capgemini.com')
+
+
+12/30/1980
+12/30/80
+
+[a-z]{6} : 
+[A-Z]{6} : 
+[0-9]{6}
+
+/^\d{2}\/\d{2}\/\d{2,4}$/
+var regex = /^\d{2}\/\d{2}\/(\d{2}|\d{4})$/
+regex.test('12/30/1980')
+
+var regex = /^[a-z]+$/i  //Regular Expression to validate a name by ignoring a case
+
+ES6 Introduction
+----------------
+ECMA International : Sets the specifications.
+JavaScript is following the Specifications
+ES1, ES2, ES3, ES4, ES5 (All the browsers currently Supporting)
+
+ES5 syntax is not that user friendly particularly
+for the developers from OOP background (ES5 doesnt Support
+concepts like class, inheritance etc).
+
+Now JS plays a vital role in the Web development, so there is 
+a need to enhance its features. ECMA international released ES6 Specifications in 
+june 2016.
+
+ES6 syntax is very much easy for the developers with OOP background. Right now not all the 
+browsers supports ES6(ES2015) completely.
+
+The current version(6.10.0) supports ES6 completely. So we directly write ES6 code and execute it in the Node Environment
+
+Node.js Introduction
+---------------------
+JavaScript is a Single Threaded Programming Language. Thread never Sleeps. 
+As a best practice we need to write the code in such a way that our never blocks 
+the thread.
+
+Ryal Dhal created Node.js using C++ and JavaScript on the top of Google Chrome's Engine V8.
+
+BootStrap
+---------
+Currently Web Applications must be responsive. i.e. It must wok in all sort of devices.
+RWD - Responsive Web Design. RWD can be achieved via CSS Media Queries, but all the developers
+are not comfortable with Media Queries. So there is a need for some framwork / library which
+supports the developers to achieve web responsiveness.
+
+BootStrap and Foundation are the two framework which comes to the rescue the developers who has some basic knowledge in CSS.
+
+Using BootStrap we can create professional responsive web applications with little knowledge in HTML & CSS.
+
+BootStrap categorize the devices as follows
+Extra Small Device : xs (Mobile)
+Small Device : sm (Tablets)
+Medium Device : md (Desktop browser)
+Large device : lg (Smart TV)
+
+BootStrap supports Mobile First Approach. 
+If the application created works well with XS devices automatically it scale up to all other devices. 
+No special code needs to be written to achieve this.
+
+BootStrap supports Grid System (12 columns)
+
+Node.JS Modules
+--------------
+In Node.js we have 3 types of Modules
+
+1. Userdefined Modules 
+2. Inbuilt Modules (core modules)
+3. Third Party modules (npmjs.com)
+
+To manage the node modules in your project we required a file named package.json(Mandatory)
+
+> npm init -y (Force creation without a wizard)
+
+Third Party modules can be installed as follows
+1. > npm install -g <packagename> : All the projects can use this module
+It will install the package as a global module(NODE_PATH)
+
+2. > npm install -S <packagename> : Only for a specific project
+It will install the package as a Project Module by saving an entry in the package.json
+ file under dependency section.
+
+3. > npm install -D <packagename>
+It will install the package as a Project Module by saving an entry in the package.json
+ file under devDependencies section.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

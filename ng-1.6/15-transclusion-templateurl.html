@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular transclusion - templateUrl</title>
+</head>
+<body>
+    <div data-cg-message-box>This is the message Content</div><hr/>
+    <div data-cg-message-box>Testing Message</div>
+    <hr/>
+    <div data-cg-message>
+        <one>Initial Message-1</one>
+        <two>Initial Message-2</two>
+    </div>
+    
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.directive('cgMessageBox',function(){
+        return {
+            restrict:'A',
+            transclude:true,
+            templateUrl:'partials/message.html' //XHR Call
+        }
+    });
+
+    app.directive('cgMessage',function(){
+        return {
+            transclude:{
+                'msg-1':'one',
+                'msg-2':'two',
+                'msg-3':'?three' //optional
+            },
+            restrict:'A',
+            templateUrl:'partials/cgmessage.html' //XHR Call
+        }
+    });
+
+    
+</script>
+</html>

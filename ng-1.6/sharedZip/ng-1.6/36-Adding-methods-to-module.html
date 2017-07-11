@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Adding Methods to custom Modules</title>
+</head>
+<body>
+    <sample-directive></sample-directive>
+    <another-directive></another-directive>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    //Adding Method to create a directive with a template to cgApp Module
+    app.quickTemplate = function(directiveName,template){
+        app.directive(directiveName,function(){
+            return {
+                template:template,
+                replace:true,
+                restrict:'E'
+            }
+        });
+    }
+
+    app.quickTemplate('sampleDirective','<h1>Sample Directive</h1>');
+    app.quickTemplate('anotherDirective','<h1>Another Directive</h1>');
+    
+</script>
+</html>

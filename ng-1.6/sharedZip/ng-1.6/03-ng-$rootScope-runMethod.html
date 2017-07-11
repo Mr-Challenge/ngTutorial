@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS-$rootScope-runMethod</title>
+</head>
+<body>
+    <h1>{{ companyName }}</h1>
+    <div ng-controller="MyCntrl">
+        <h2>{{ name }}</h2>
+        <h2>{{ companyName }}</h2>
+         <div ng-controller="AnotherCntrl">
+            <h2>{{ name }}</h2>
+            <h2>{{ companyName }}</h2>
+        </div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+    //As a best practice do not attach many models to the rootScope
+    //It is used to execute when the app gets initialized. It is the best place to initialize the rootScope
+    app.run(function($rootScope){
+        $rootScope.companyName = 'Capgemini';
+    });
+
+    //MyCntrl code will gets executed only if it is used in the View with ng-controller
+    app.controller('MyCntrl',function($scope,$rootScope){
+        $scope.name = 'Karthik';
+        $rootScope.companyName = 'Capgemini India';
+        console.log('MyCntrl id :'+$scope.$id);
+        console.log('MyCntrl Parent id :'+$scope.$parent.$id);//+$scope.$parent wont always be the rootScope
+        console.log('RootScope id :'+$rootScope.$id); //$rootScope is the way to access the rootScope in the controller
+    });
+
+    app.controller('AnotherCntrl',function($scope,$rootScope){
+        $scope.name = 'Logith';
+        console.log('AnotherCntrl id :'+$scope.$id);
+        console.log('RootScope id :'+$rootScope.$id);
+    });
+</script>
+</html>

@@ -1,0 +1,30 @@
+<html data-ng-app="testApp"> 
+	<head>
+		<title>Testing Routing</title>
+	</head>
+	<body>
+		<div>
+			<h1>AngularJS Training</h1>
+		<div>
+		<div data-ng-controller="RouteCtrl">
+			<div>
+	<input id="btnHome" type="button" value="Home" data-ng-click="loadPage('')"/>
+	<input id="btnCountry" type="button" value="Country" data-ng-click="loadPage('country')"/>
+	<input id="btnState" type="button" value="State" data-ng-click="loadPage('country/state')"/>
+	<input id="btnCity" type="button" value="City" data-ng-click="loadPage('country/state/city')"/>
+	<input id="btnTrainer" type="button" value="TrainerInfo" data-ng-click="loadPage('trainer')"/>
+			</div>
+		  <hr/>
+			<div data-ng-view></div>
+		<hr/>
+		<div>&copy;Copyrights Reserved 2017 Capgemini</div>
+	</body>
+	<script src="../bower_components/angular/angular.js"></script>
+	<script src="../bower_components/angular-route/angular-route.js"></script>
+	<script src="../app.js"></script>
+	<script src="./Routing-View.js"></script>
+	
+</html>
+
+
+

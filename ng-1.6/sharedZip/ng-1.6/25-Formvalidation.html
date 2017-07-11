@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS Form Validation</title>
+    <style>
+        .err{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <div data-ng-controller="FormCntrl">
+        <form name="frm" action="#">
+            <table>
+                <tr>
+                    <td align="right">
+                        <label>Id : </label>
+                    </td>
+                    <td>
+                        <input type="text" name="txtId" id="txtId" 
+                        data-ng-model="employee.id" data-ng-required="true" 
+                        data-ng-minlength="4" data-ng-maxlength="6">
+                        <span class="err" data-ng-show="frm.txtId.$dirty && frm.txtId.$error.required">Id is required</span>
+                        <span class="err" data-ng-show="frm.txtId.$dirty && frm.txtId.$error.minlength">Minimum 4 digits required</span>
+                        <span class="err" data-ng-show="frm.txtId.$dirty && frm.txtId.$error.maxlength">Maximum 6 digits allowed</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                         <label>Name : </label>
+                    </td>
+                    <td>
+                        <input type="text" name="txtName" id="txtName" 
+                        data-ng-model="employee.name" data-ng-required="true" 
+                        data-ng-pattern="/^[a-z]+$/i">
+                        <span class="err" data-ng-show="frm.txtName.$dirty && frm.txtName.$error.required">Name is required</span>
+                        <span class="err" data-ng-show="frm.txtName.$dirty && frm.txtName.$error.pattern">Only Alphabets allowed</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Submit" data-ng-disabled="frm.$invalid">
+                        <input type="reset" value="Reset" data-ng-click="frm.$setPristine()">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>   
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('FormCntrl',['$scope',function($scope){
+        $scope.employee = {id:0,name:''};
+    }]);
+</script>
+</html>
+
+<!--
+    Id   : Required, numbers, min : 4, max : 6
+    Name : Required, Alphabets
+
+    Inbuilt Validation Directives :
+    *****************************
+    ngRequired
+    ngMinLength
+    ngMaxLength
+    ngPattern
+    
+    css classes
+    ************
+    valid : if all the validations are meet
+    invalid : if any one of the validation is not meet
+    dirty : when the user interacts with the element
+    pristine : When the user interaction not happened
+-->

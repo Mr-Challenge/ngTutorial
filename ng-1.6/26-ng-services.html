@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular Services</title>
+</head>
+<body>
+    <div data-ng-controller="ServiceCntrl"></div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    /*Constant : Value cannot be changed*/
+    app.constant('PI',3.14);
+
+    /*Value : It can be changed*/
+    app.value('URL','http://capgemini.com');
+    app.value('URL','http://capgemini.in'); 
+
+    var fn = function(){
+        this.name = 'Guest';
+
+        this.$get = function(){ //Since it is a current instance function we can access the members of current instance
+           return {
+               getName:function(){
+                   return this.name; //no name property is attached to the current instance.
+                   // It is actually available from the outer function's current instance
+               }.bind(this)//binding the current instance(outer function instance with inner Function) to the fucntion getName()
+           };
+        }
+        this.returnName = function(){
+            return this.name;
+        }
+        this.setName = function(name){
+            this.name = name;
+        }
+        return 'Factory Service'
+    }
+    
+    /*Factory : Whatever the function returns*/
+    app.factory('FactoryService',fn);
+
+    /*Service : Returns the instance. It cannot be configured in the config function*/
+    app.service('Service',fn);
+
+    /*Provider : will return $get function's return value. Providers can be configured in the config function */
+    app.provider('CustomService',fn);
+
+    /*config method can take only constant and providers as arguments, service, factory and value cannot be passed as argument*/
+    /*Providers can be configured in the config function but it needs to suffixed with Provider*/
+    app.config(['CustomServiceProvider','PI',function(CustomServiceProvider,PI){
+        CustomServiceProvider.setName('Karthik');
+        console.log('PI:'+PI);
+    }]);
+
+    //when the providers are injected in the controller no need to suffix it with Provider
+    app.controller('ServiceCntrl',['$scope','Service','CustomService',function($scope,Service,CustomService){
+       console.log(Service.returnName()); //Configured details cannot be accessed because it gets executed before the config method
+       console.log(CustomService.getName());
+    }]);
+
+</script>
+</html>
+<!--
+Service is nothing but which does some sort of work.
+In AngularJS all your business logic needs to be defined via services
+Services are singleton (Only one instance will be created)
+Services are Lazy loaded (Until it is called it wont get executed)
+Services can be injected (Injector Service will take care of Dependency Injection)
+In Angular 1.x we can create 5 types of services
+
+In angular all providers will have a service. For instance
+
+$InterpolateProvider will have $Interpolate Service. 
+
+Inorder to Use Provider we need to Suffix 'Provider' otherwise it will be considered as Service
+
+You can inject the providers only in your bootstrap .config() blocks before all instances are generated.
+-->

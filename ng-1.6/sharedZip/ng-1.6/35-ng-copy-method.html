@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular Copy</title>
+    <link href="./css/bootstrap.css" rel="stylesheet">
+</head>
+<body class="container">
+    <div class="page-header">Angular Copy</div>
+    <div data-ng-controller="TrainersCtrl as ctrl">
+        <div>
+            <span> Id : </span> <input type="text" readonly data-ng-model="ctrl.trainerCopy.id"/>
+            <span> Name : </span> <input type="text" data-ng-model="ctrl.trainerCopy.name"/>
+            <span> Technology : </span> <input type="text" data-ng-model="ctrl.trainerCopy.technology"/>
+            <button class="btn btn-primary" data-ng-click="ctrl.saveTrainer()">Save</button>
+        </div>
+        <hr>
+        <table class="table table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Technology</th>
+                <th></th>
+            </tr>
+            <tr data-ng-repeat="trainer in ctrl.trainers">
+                <td>{{ trainer.id }}</td>
+                <td>{{ trainer.name }}</td>
+                <td>{{ trainer.technology }}</td>
+                <td>
+                    <button class="btn btn-primary" data-ng-click="ctrl.selectTrainer(trainer)">Select</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('TrainersCtrl',function(){
+
+        this.selectedTrainer = null;
+
+        this.trainers = [
+            {id:108331,name:'Karthik',technology:'JavaScript'},
+            {id:108332,name:'Anil',technology:'JEE'},
+            {id:108333,name:'Ganesh',technology:'Dotnet'},
+        ];
+      
+        this.selectTrainer = function(trainer){
+             this.selectedTrainer = trainer;
+             //angular.copy is a method available in ng module
+             this.trainerCopy = angular.copy(trainer); //deep copy will be done as a new instance
+        }
+
+        this.saveTrainer = function(){
+            for(prop in this.trainerCopy){
+                this.selectedTrainer[prop] = this.trainerCopy[prop];
+            }
+        }
+    });
+</script>
+</html>

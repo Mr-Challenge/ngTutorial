@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS TemplateCache</title>
+</head>
+<body>
+    <cg-directive></cg-directive>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.run(['$templateCache',function($templateCache){
+        $templateCache.put('greet','<h1>Welcome {{ userName }}</h1>');
+        $templateCache.put('sayHi','<h1>Hi Everyone</h1>');
+    }]);
+
+    app.directive('cgDirective',function(){
+        return {
+            templateUrl:'sayHi',
+            controller:['$scope',function($scope){
+                $scope.userName = 'Guest';
+            }],
+            replace:true
+        }
+    });
+</script>
+</html>

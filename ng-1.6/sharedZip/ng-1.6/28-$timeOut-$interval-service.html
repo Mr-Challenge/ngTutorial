@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular inbuilt service -$timeout - $interval</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl"> 
+        <div>Counter : {{ counter }}</div>
+        <div>Message : {{ message }}</div>
+        <hr/>
+        <button data-ng-click="cancelTimeout()">Cancel Task</button>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('MyCntrl',['$scope','$timeout','$interval',function($scope,$timeout,$interval){
+        $scope.counter = 0;
+
+       /*setInterval(function(){
+             //Model state is getting changed for every one second, 
+             //but since this change it is not done via Angular inbuilt Service / Directive
+             //Digest cycle wont occur, so that the model state change wont be reflected in the view.
+             $scope.counter+=1;
+             console.log($scope.counter)
+        },1000);*/
+
+        var intervalPromiseObj = $interval(function(){
+             //Model state is getting changed for every one second, 
+             //but since this change is done via Angular inbuilt Service 
+             //Digest cycle happens, and the model state change will be reflected in the view.
+             $scope.counter+=1;
+        },1000,3);
+
+        var timeoutPromiseObj = $timeout(function(){
+            $scope.message = '3 seconds over';
+        },3000);
+
+        $scope.cancelTimeout = function(){
+            $interval.cancel(intervalPromiseObj);
+            $timeout.cancel(timeoutPromiseObj);
+            $scope.message = 'Timers Cancelled';
+        }
+    }]);
+</script>
+</html>
+<!--
+classic setTimeOut and setInterval Limitations
+***********************************************
+ We cannot cancel the setTimeOut and setInterval
+ We cannot specify the number of times function(task) to get executed using setTinterval
+ setTimeOut and setInterval doesnt return promise
+-->

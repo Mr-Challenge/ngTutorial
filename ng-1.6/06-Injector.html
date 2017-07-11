@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - Injector Service</title>
+</head>
+<body>
+    <div ng-controller="MyCntrl"></div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    //By default Injector Service will inject the instance for the services($rootScope,$scope) provided as an argument
+    app.controller('MyCntrl',['$scope','$rootScope',function(scope,root){
+        alert('MyController invoked');
+        scope.name = 'Karthik';
+        root.companyName ='Capgemini';
+        if(scope.name !== undefined && root.companyName!==undefined){
+            alert('Name : '+scope.name+' CompanyName: '+root.companyName);
+        }
+    }]);
+</script>
+</html>
+
+<!--
+4 == '4' (JS is loosely type it will return true)
+4 === '4' (strict comparison operator returns false)
+
+var i;
+typeof(i)//undefined
+
+Scope : $rootScope
+ChildScope : $scope
+
+How Angular Injector Works
+**************************
+
+//To provide the injector service to Angular Module
+var injector = angular.injector(['ng']);
+
+//Check whether the service available in the module 
+injector.has('$http')
+true
+
+injector.has('$q')
+true
+
+injector.has('$rootScope')
+true
+
+// To create the instance
+var root = injector.get('$rootScope');
+
+//create injector for ng and cgApp modules
+var injector = angular.injector(['ng','cgApp']);
+
+//Creating instance for Controller
+var controller = injector.get('$controller');
+
+//Creating instance for $rootScope
+var root = injector.get('$rootScope');
+
+//Creating instance for $Scope
+var scope = root.$new();
+
+//Attach model name to ChildScope
+scope.name = 'Logith'
+
+//Attach model companyName to RootScope
+root.companyName = 'Capgemini india'
+
+//Invoking the controller
+controller('MyCntrl',{$scope:scope,$rootScope:root});
+-->

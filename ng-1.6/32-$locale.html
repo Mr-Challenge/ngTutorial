@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular $locale inbuilt service</title>
+    <link href="./css/bootstrap.css" rel="stylesheet"/>
+</head>
+<body class="container">
+    <div data-ng-controller="MyCntrl">
+        <div class="jumbotron"><h1>{{ today }}<h1></div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script src="./scripts/angular-locale_hi-in.js"></script>
+<script src="./scripts/angular-locale_fr-fr.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('MyCntrl',['$scope','$filter',function($scope,$filter){
+        $scope.today = $filter('date')(new Date(),'dd EEEE MMMM yyyy');
+    }]);
+</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS filters</title>
+</head>
+<body>
+    <h1>Filters in AngularJS</h1>
+    <hr/>
+    <div data-ng-controller="MyCntrl">
+        <!-- using inbuilt filters in the view -->
+        <div>{{ 'capgemini' | uppercase }}</div>
+        <div>{{ 'CAPGEMINI' | lowercase }}</div>
+        <div>{{ '34.565464567' | number:2 }}</div>
+        <div>{{ 2000 | currency:'Rs.' }}</div>
+        <div>{{ today | date:'EEEE, d MMMM yyyy' }}</div>
+        <div>{{ employee | json }}</div>
+        <div>{{ cities | orderBy:'-1'}}</div> <!-- -1 for descending, 0 for ascending -->
+        <div>
+            <ul>
+                <li data-ng-repeat="employee in employees | orderBy:'name':0 | limitTo:3" data-ng-bind-template="{{ employee.id+'-'+employee.name }}"></li>
+            </ul>
+        </div>
+        <div> {{ employees | filter:{name:'gan'} }} </div>
+        <div> {{ filteredDate }} </div>
+        <div>{{ [65,73,68,900,32,66,94,22,67] | filterNumbers : 'even' }}</div>
+        <div>{{ oddNumbers }}</div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    /*Custom Filter*/
+
+    app.filter('filterNumbers',function(){
+        return function(numbers,type){
+            var evenNumbers = [];
+            var oddNumbers = [];
+            
+            numbers.forEach(function(number) {
+                if(number % 2 === 0 )
+                    evenNumbers.push(number);
+                else
+                    oddNumbers.push(number);
+            });
+
+            if(type == 'even')
+                return evenNumbers;
+            else if(type == 'odd')
+                return oddNumbers;
+            else
+                return numbers;
+        }
+    });
+
+    app.controller('MyCntrl',['$scope','$filter',function($scope,$filter){
+        $scope.today = new Date();
+        $scope.employee = {id:108331,name:'Karthik'};
+        $scope.cities = ['Mumbai','Bangalore','Chennai'];
+        $scope.employees = [
+            {id:108331,name:'Karthik'},
+            {id:714709,name:'Anil'},
+            {id:714901,name:'Abishek'},
+            {id:707224,name:'Abishek'},
+            {id:812345,name:'Ganesh'}
+        ];
+        //Using the inbuilt filter in the Controller using $filter service
+        $scope.filteredDate = $filter('date')(new Date(),'dd-MMM-yyyy');
+        $scope.numbers = [65,73,68,900,32,66,94,22,67];
+        $scope.evenNumbers =  $filter('filterNumbers')($scope.numbers,'even');
+        $scope.oddNumbers =  $filter('filterNumbers')($scope.numbers,'odd');
+        
+    }]);
+</script>
+</html>
+<!--
+Filters are used to Transform the data
+-->

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular Isolated Scope - Execute methods from Parent Scope</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl">
+       <div>
+           <button data-ng-click="greetUser('Karthik')">Controller - Say Hi</button>
+        </div>
+        <hr/>
+        <cg-directive data-greet-user="greetUser('Arvind')"></cg-directive>
+   </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app=angular.module('cgApp',[]);
+
+    app.directive('cgDirective',function(){
+        return {
+            scope:{
+                greetUser:'&'//Exceute the methods from parent scope in the isolated scope
+            },
+            template:'<div><button data-ng-click="greetUser()">Directive - Say Hi</button></div>'
+        }
+    });
+
+    app.controller('MyCntrl',['$scope',function($scope){
+        $scope.greetUser = function(username){
+            alert('Hi : '+username);
+        }
+    }]);
+</script>
+</html>

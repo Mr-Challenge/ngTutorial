@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - inbuilt Directives</title>
+</head>
+<body>
+    <div data-ng-controller="DirectiveCntrl">
+        <div>{{ 'Name:'+ name }}</div>
+        <div data-ng-bind="name"></div>
+        <div>
+            <input type="text" data-ng-model="city"> <!-- Two way binding -->
+            <span data-ng-bind="city"></span>
+        </div>
+        <div>
+            <ul>
+                <li data-ng-repeat="place in places" data-ng-bind="place"></li>
+            </ul>
+        </div>
+        <div>
+            <div><span data-ng-non-bindable>{{ 1 + 4 }}</span> will produce {{ 1 + 4 }}</div>
+        </div>
+        <div>
+            <image data-ng-src="{{ './images/'+ logoPic }}" alt="Capgemini logo"/>
+            <br/>
+            <a data-ng-href="{{ companyUrl }}">Company WebSite</a>
+        </div>
+        <div>
+            <div data-ng-if="status">Contents will get displayed in the DOM because status is set to true</div>
+            <div data-ng-if="!status">Contents will get displayed in the DOM because status is set to false</div>
+            <hr/>
+            <button data-ng-click="changeStatus()">Show / Hide </button>
+        </div>
+        <div data-ng-bind-template="{{ firstName+' '+lastName}}"></div>
+        <!-- To initialize the model from the View -->
+        <div data-ng-init="companyName='Capgemini'">
+            <div data-ng-bind="companyName"></div>
+        </div>
+        <div data-ng-show="status">Show in DOM from hidden State</div>
+         <hr/>
+        <button data-ng-click="changeStatus()">Show / Hide </button>
+        <hr/>
+        <!-- Since it is an Ajax Call need to execute this program in Webserver -->
+        <div data-ng-include="partialPage"></div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('DirectiveCntrl',['$scope',function($scope){
+        $scope.name = 'Karthik';
+        //$scope.city = 'Chennai';
+        $scope.places = ['Chennai','Bangalore','Mumbai','Pune'];
+        $scope.logoPic = 'capgemini.gif'; 
+        $scope.companyUrl = 'http://capgemini.com';
+        $scope.status = false;
+        $scope.changeStatus = function(){
+           $scope.status = !$scope.status;
+        }
+        $scope.firstName = 'Karthik';
+        $scope.lastName = 'Muthukrishnan';
+        $scope.partialPage = './partials/test.html'; //XHR (Ajax Call)
+          
+    }]);
+</script>
+</html>
+
+<!--
+Directives are used to powerup the html
+It promotes HTML from Document to Application
+when we use directives as attributes prefix it with data- (HTML5 custom attribute syntax )
+
+(data-) will be simply ignored by Angular. It mainly used for HTML5 Complaint 
+
+ngModel is used to perform two way binding. 
+If the model is available it will bind to the element, if not it will create it based on the scope where it is declared.
+-->

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS Routing (SPA - Single Page Application)</title>
+</head>
+<body>
+    <h1>Header</h1>
+    <hr/>
+    <div data-ng-controller="MyCntrl">
+        <table>
+            <tr>
+                <td>
+                    <button data-ng-click="loadPage('')">Home</button>
+                    <button data-ng-click="loadPage('about')">About Us</button>
+                    <button data-ng-click="loadPage('person/Karthik/Bangalore/Karnataka')">Person Details</button>
+                </td>
+            </tr>
+        </table>
+        <!-- 3. Add ng-view which will act like a placeholder. Only this part will be changed -->
+        <div data-ng-view></div>
+    </div>
+    <hr/>
+    <h1>Footer</h1>
+</body>
+<script src="./scripts/angular.js"></script> <!-- ng Module default module-->
+<script src="./scripts/angular-route.js"></script> <!-- 1. include the script which contains ngRoute Module-->
+<script>
+    var app = angular.module('cgApp',['ngRoute']); // 2. Add ngRoute as a dependency module
+
+    //4. Configure the Routing with $routeProvider
+    app.config(['$routeProvider',function($routeProvider){
+        $routeProvider.when('/',{
+            template:'<h1>Home</h1>',
+            controller:'MyCntrl'
+        }).when('/about',{
+            template:'<h1>About Us</h1>',
+            controller:'MyCntrl'
+        }).when('/about',{
+            template:'<h1>About Us</h1>',
+            controller:'MyCntrl'
+        }).when('/person/:name/:city/:state',{ //route params need to specified as :param
+            templateUrl:'partials/person-template.html',
+            controller:'MyCntrl'
+        }).when('/person/:test',{ //use the route: /person/testing?city=Chennai&state=TN
+             redirectTo:function(routeParams,path,search){
+                console.log(routeParams); //to get the Route Parameter values : test value(testing)
+                console.log(path); //to get the path : /person/testing
+                console.log(search); //to get queryString
+                 return '/'
+             }
+        }).otherwise({
+            redirectTo:'/' //redirect to root Route
+        });
+    }]);
+
+    app.controller('MyCntrl',['$scope','$location','$routeParams',function($scope,$location,$routeParams){
+        $scope.name = $routeParams.name;
+        $scope.city = $routeParams.city;
+        $scope.state = $routeParams.state;
+        
+        $scope.loadPage = function(page){
+            $location.url('/'+page)
+        }
+    }]);
+</script>
+</html>

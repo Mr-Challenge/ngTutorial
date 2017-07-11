@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS-Config-Method</title>
+</head>
+<body>
+    <div ng-controller="SampleCntrl">
+        <h1>{[{ name }]}</h1>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.run(function(){
+         console.log('Run called');
+    });
+    
+    //All sort of application configuration stuff can be done here.
+    //It takes a function with an argument(supposed to be a provider).Using providers only we can alter the functionality
+    app.config(function($interpolateProvider){
+        console.log('Config called');
+        $interpolateProvider.startSymbol("{[{");
+        $interpolateProvider.endSymbol("}]}");
+    });
+
+    app.controller('SampleCntrl',['$scope','$rootScope',function(s,r){
+        console.log('Controller called');
+        s.name = 'Karthik';
+    }]);
+</script>
+</html>
+
+<!--
+Minification : It is best practice to minify the scripts so that it can be downloaded quickly.
+
+When Minifying a Script : 
+1.Variables named gets shorter
+2. Comments and documentation will be removed
+3. Spaces will be removed
+
+So the problem is when minifying there is a chance of $scope,$rootScope (reserved words) gets minified to $s, $r which makes the program to stop working
+-->

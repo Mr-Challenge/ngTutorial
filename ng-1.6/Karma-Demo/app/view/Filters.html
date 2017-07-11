@@ -1,0 +1,23 @@
+<html data-ng-app="testApp"> 
+	<head>
+		<title>Testing Filters</title>
+	</head>
+	<body>
+		<div data-ng-controller="FilterCtrl">
+			<div>{{'google'|uppercase}}</div>
+			<div>{{name|lowercase}}</div>
+			<div>{{20|currency:'Rs.'}}</div>
+			<div>{{today|date:'EEEE d,MMMM yyyy'}}</div>
+			<div>{{time}}</div>
+			<div>{{'ashik'|printUpper}}</div>
+			<div>{{favTrainer}}</div>
+			<div>{{[1,2,3,4,5,6]|arrayFilter:'even'}}</div>
+			<div>{{results|json}}</div>
+		</div>
+	</body>
+	<script src="../bower_components/angular/angular.js"></script>
+	<script src="../bower_components/angular-route/angular-route.js"></script>
+	<script src="../app.js"></script>
+	<script src="../components/filters.js"></script>
+	<script src="./Filter-view.js"></script>
+</html>

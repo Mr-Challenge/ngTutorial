@@ -1,0 +1,5 @@
+step 1:  Download the Node from (https://nodejs.org/dist/v6.11.0/node-v6.11.0-win-x64.zip) for 64 bit OS.
+step 2:  Extract the files to D:/nodejs
+step 3:  Create the user environment variables with the values given below
+	  1. PATH : d:\nodejs
+	  2. NODE_PATH : d:\nodejs\node_modules

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Binding the model with Dropdownlist</title>
+</head>
+<body>
+    <div data-ng-controller="SampleCntrl">
+        <div>
+            <p>Selected Value : {{ selectedItem }}</p>
+            <select data-ng-model="selectedItem">
+                <option value="">Select a name</option>
+                <option data-ng-repeat="item in items" value="{{ item.id }}">{{item.name}}</option>
+            </select>
+        </div>
+        <hr>
+        <!-- label for value in array : using data-ng-options-->
+        <div>
+            <p>Selected Item : {{ selectedInfo }}</p>
+            <p>Selected Id : {{ selectedInfo.id }}</p>
+            <p>Selected Name : {{ selectedInfo.name }}</p>
+            
+            <select data-ng-init="selectedInfo = options[2]" data-ng-model="selectedInfo" data-ng-options="option.name for option in options">
+                <option value="">Select a name</option>
+            </select>
+        </div>
+        <hr>
+         <!-- select as label for value in array : using data-ng-options-->
+        <div>
+            <p>Selected Item : {{ selectedOption }}</p>
+            <select data-ng-model="selectedOption" data-ng-options="collection.name as collection.id for collection in collections">
+                <option value="">Select a Id</option>
+            </select>
+        </div>
+         <hr>
+         <!-- label group by group for value in array : using data-ng-options-->
+        <div>
+            <p>Selected Item : {{ selectedEmployee }}</p>
+            <select data-ng-model="selectedEmployee" data-ng-options="employee.name group by employee.technology for employee in employees">
+                <option value="">Select a Name</option>
+            </select>
+        </div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('SampleCntrl',['$scope',function($scope){
+        $scope.items = [
+            {id:714709,name:'Karthik'},
+            {id:714710,name:'Latha'},
+            {id:714711,name:'Anil'},
+            {id:714712,name:'Ganesh'}
+        ];
+
+        $scope.options = [
+            {id:714709,name:'Karthik'},
+            {id:714710,name:'Latha'},
+            {id:714711,name:'Anil'},
+            {id:714712,name:'Ganesh'}
+        ];
+
+        $scope.collections = [
+            {id:714709,name:'Karthik'},
+            {id:714710,name:'Latha'},
+            {id:714711,name:'Anil'},
+            {id:714712,name:'Ganesh'}
+        ];
+
+        $scope.employees = [
+            {id:714709,name:'Karthik',technology:'Dotnet'},
+            {id:714710,name:'Latha', technology:'UX'},
+            {id:714711,name:'Anil', technology:'JEE'},
+            {id:714712,name:'Ganesh',technology:'Dotnet'}
+        ];
+    }]);
+</script>
+</html>

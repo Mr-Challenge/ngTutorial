@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - Compile Service</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl">
+        Expression : <input id="txtExp" type="text" data-ng-model="exp">
+        <button data-ng-click="compileIt(exp)">Compile It!</button>
+        <hr/>
+        <!-- target where the compiled DOM need to be appended--> 
+        <div id="target"></div>
+    </div>
+</body>
+<script src="./scripts/jquery.js"></script>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.controller('MyCntrl',['$scope','$compile',function($scope,$compile){
+        $scope.name = 'Karthik';
+        $scope.companyName = 'Capgemini';
+
+        $scope.compileIt = function(exp){
+            var compiledDOM = $compile(exp)($scope);
+            //jqLite cannot use the selectors, so we required jQuery and use angular.element instead of $(jQuery)
+            angular.element('#target').append(compiledDOM);
+            angular.element('#txtExp').val('');
+        }
+
+    }]);
+</script>
+</html>

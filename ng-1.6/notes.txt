@@ -1,0 +1,12 @@
+html>head>title{Angular 1.6}^body>div#main{Div with id Main}+div.sty{Div with the class sty}+div[data-company="Capgemini"]{Div with Attribute}+div>p{para-$}*5
+
+Table with 3 rows and 2 columns
+table>(tr>td{td-$}*2)*3
+
+To run XHR without a webserver
+------------------------------
+Close all the Chrome instances
+From Run Window (CTRL + R )
+chrome.exe --allow-file-access-from-files -disable-web-security 
+
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular Isolated Scope - One Way</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl">
+        <div>
+            <span>City from Controller : </span>
+            <input type="text" data-ng-model="city"/>
+            <span data-ng-bind="city"></span>
+        </div>
+        <hr/>
+        <cg-directive place="{{city}}"></cg-directive>
+   </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app=angular.module('cgApp',[]);
+
+    app.directive('cgDirective',function(){
+        return {
+            scope:{
+                place : '@' //One Way Binding in Isolated Scope
+            }, //Isolated scope
+            template:'<div>'+
+                '<span>City From Directive: </span>'+
+                '<input type="text" data-ng-model="place"/> <span data-ng-bind="place"></span>'+
+            '</div>'
+        }
+    });
+
+    app.controller('MyCntrl',['$scope',function($scope){
+        $scope.city = 'Bangalore';
+        $scope.name = 'Karthik';
+    }]);
+</script>
+</html>

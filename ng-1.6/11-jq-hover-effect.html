@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Hover Effect</title>
+    <style>
+        .customStyleOne{
+            background-color: yellow;
+        }
+        .customStyleTwo{
+            background-color: red;
+            color:white;
+        }
+        
+    </style>
+</head>
+<body>
+    <button class="hover" data-custom-style="customStyleOne">Special Button</button>
+    <button class="hover" data-custom-style="customStyleTwo">Another Button</button>
+    
+</body>
+<script src="./scripts/jquery.js"></script>
+<script>
+    $(function(){
+        $('.hover').bind('mouseenter mouseleave',function(){
+            var $element = $(this); //this refers RAW DOM Object. To convert into jQuery Object wrap it with $();
+            var style =$element.attr('data-custom-style');
+            $element.toggleClass(style);
+        });
+    });
+</script>
+</html>

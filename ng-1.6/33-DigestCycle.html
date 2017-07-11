@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - Digest Cycle and Watch</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl">
+        <div>
+            <div> Model Variable Value : {{ modelVariable }}</div>
+            <hr>
+            <button data-ng-click="changeModelValue()">Change Model Variable value using ngClick</button>
+        </div>
+        <hr/>
+        <div>
+            <div> Model Variable Value : {{ modelVariable }}</div>
+            <hr>
+            <button data-cg-click="changeModelValue()">Change Model Variable value using cgClick</button>
+        </div>
+        <hr/>
+        <div>Counter : {{ counter }}</div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.directive('cgClick',function(){
+        return function(scope,element,attrs){
+            element.bind('click',function(){
+                scope.modelVariable = 'Initial Value Changed by cgClick';
+                //trigger the digest Cycle 
+                //scope.$digest(); // digest cycle will execute all the watchers only from the child Scope
+                scope.$apply();//digest cycle will execute all the watchers from the root Scope - recommended
+            });
+        }
+    });
+
+    app.controller('MyCntrl',['$scope',function($scope){
+        $scope.modelVariable = 'Initial Value';
+        $scope.company = 'Capgemini';
+        $scope.changeModelValue = function(){
+             $scope.modelVariable = 'Initial Value Changed by ngClick';
+        }
+        $scope.counter = 0;
+        //Manually we need to trigger the digest Cycle, which is not required when we use $interval service
+        setInterval(function(){
+            $scope.counter += 1;
+            $scope.$apply();
+        },1000);
+
+        //Explicitly Set the watcher for modelVariable
+        $scope.$watch('modelVariable',function(newVal,oldVal){
+            console.log('modelvariable OldValue : '+oldVal+' NewValue : '+newVal);
+        });
+
+        //Explicitly Set the watcher for company
+        $scope.$watch('company',function(newVal,oldVal){
+            //which will get executed only once i.e. in the inital load (first digest cycle)
+            console.log('company OldValue : '+oldVal+' NewValue : '+newVal);
+        });
+    }]);
+</script>
+</html>
+<!--
+   
+    whenever we create a model variable, angular will create a watcher implictly
+
+    watchers are used to perform dirty checking(it will check whether the old value got changed to new value)
+
+    when the watcher is executed the newly updated value will be rendered in the view.
+
+    A Model value can be changed with its value based on the following actions :
+    a) When user interaction occurs via events(click, select ...)
+    b) XHR (Ajax calls)
+    c) using Timers(setTimeout ,setInterval)
+
+    By Default when the model gets changed because of the inbuilt services / directives
+    angular will trigger the digest cycle automatically (from the RootScope i.e. where ever we specified ngApp) which in turn it will invoke the watchers(which has been set implicitly for the model variables)
+    and check the old value and the new value is different, if it is different the watchers will perform the updation. 
+
+    when the model gets changed because of userdefined directive / service. 
+    It is our responsibility to trigger the digest cycle.
+-->

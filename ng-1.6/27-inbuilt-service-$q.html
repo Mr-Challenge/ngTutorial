@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - inbuilt Service - $q</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl">
+        <div>{{ result }}</div>
+        <hr/>
+        <div>{{ error }}</div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.factory('qservice',['$q',function($q){
+        var deferredObject = $q.defer();
+        var promiseObj = deferredObject.promise;
+        setTimeout(function() {
+            //deferred execution
+            var result = 'Data from Server';
+            //deferredObject.resolve(result);
+           deferredObject.reject('Some Error Occured');
+        }, 3000);
+        return promiseObj;
+    }]);
+
+    app.controller('MyCntrl',['$scope','qservice',function($scope,qservice){
+       qservice.then(function(data){
+            $scope.result = data;
+       },function(err){
+            $scope.error = err;
+       });
+    }]);
+</script>
+</html>
+<!--
+    $q service - inbuilt service in angular is used to work with deferred excecutions
+    if we need to work with Promise in AngularJS 1.x we need to use $q service.
+-->

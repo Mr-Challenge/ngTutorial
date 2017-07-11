@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS - controllerAs</title>
+</head>
+<body>
+    <div data-ng-controller="MyCntrl as cntrl">
+        <span>Name : {{ name }} </span>
+        <hr/>
+        <span>Company Name : {{ cntrl.companyName }} </span>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+   app.controller('MyCntrl',['$scope',function($scope){
+        $scope.name = 'Karthik';
+        this.companyName = 'Capgemini'; //we can access the current instance properties using controller As syntax
+   }]);
+</script>
+</html>

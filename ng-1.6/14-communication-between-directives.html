@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJS Directive Communication using require</title>
+</head>
+<body>
+    <h1>AngularJS Directive Communication</h1>
+    <hr/>
+    <h2>Open Console window to see the results </h2>
+    <div data-ng-controller="DirectiveController">
+        <div data-cg-parent-directive>
+            <div data-cg-child-directive>
+            
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    app.directive('cgParentDirective',function(){
+        return {
+            restrict:'A',
+            controller:['$scope',function($scope){
+                console.log('Parent Directive Controller Scope Id : '+$scope.$id);
+                $scope.name = 'Karthik';
+                this.companyName = 'Capgemini';//Specific for this directive only
+                this.add = function(a,b){
+                    return a + b;
+                }
+            }],
+            link:function(scope,element,attrs){
+                 console.log('Parent Directive link function Scope Id : '+scope.$id);
+            }
+        }
+    });
+
+    app.directive('cgChildDirective',function(){
+        return {
+             restrict:'A',
+             // ^  : look for the parentDirective from the element or from its parent element
+             // ? : parentDirective as optional
+             require:'?^cgParentDirective',
+             //link function takes 4th argument only when it has require key which is use to specify its parent Directive
+             link:function(scope,element,attrs,parentDirective){
+                 console.log('Child Directive link function Scope Id : '+scope.$id);
+                 console.log('Name from Parent Directive : '+scope.name);
+                 if(parentDirective){//parent directive is defined
+                    console.log(parentDirective);
+                    console.log('CompanyName from Parent Directive : '+parentDirective.companyName);
+                    console.log('Adding through Parent Directive : '+parentDirective.add(5,6));
+                 }
+             }
+        }
+    });
+
+    app.controller('DirectiveController',['$scope',function($scope){
+         console.log('Directive Controller Scope Id : '+$scope.$id);
+    }]);
+</script>
+</html>
+
+<!--
+constructor Function(Pascal Case) in javaScript. By default all function in javaScript returns 'this' 
+We can create multiple instance out of that like a class in OOP
+
+function Person(firstName, lastName){
+    //this = {}; //constructor function creates an empty object by default
+    this.firstName = firstName;
+    this.lastName = lastName;
+    //return this; implicitly returns
+}
+ var p1 = new Person("Karthik","Muthukrishnan");
+ var p2 = new Person("Logith","Karthik");
+
+-->

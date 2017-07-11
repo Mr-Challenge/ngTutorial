@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Dirtectives</title>
+</head>
+<body>
+    <!-- Custom Directive used an (E)element recommended -->
+    <cg-directive></cg-directive>
+    
+    <!-- Custom Directive used an (A)attribure recommended -->
+    <div data-cg-directive></div>
+
+    <!-- Custom Directive used an (C)class recommended -->
+    <div class="cg-directive"></div>
+
+    <!-- Custom Directive used an (M)comment Not Recommended -->
+    <!-- directive:cg-directive -->
+    
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp',[]);
+
+    /*
+    Directives must be always in Camel Case inside the Controller
+    and must be in Kebab case when it is used in view
+    Directive can be used as E - Element(Default) A - Attribute(Default) C - Class M - Comment 
+     */
+    app.directive('cgDirective',function(){
+        /*DDO - Directive Definition Object*/
+        return {
+            restrict: 'CAME',
+            template: '<h1>Capgemini Directive</h1>',
+            replace: true //Element (HTML 5 complaint) (or) Comment as a directive (false it won't work)
+        }
+    });
+</script>
+</html>
+<!--
+ In Angular 1.x we can create directive and use it in 4 different ways
+ Element - E
+ Attribute - A
+ Class - C
+ CoMment - M
+-->

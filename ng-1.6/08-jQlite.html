@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQlite</title>
+</head>
+<body>
+    <p>para-1</p>
+    <p>para-2</p>
+</body>
+<script src="./scripts/jquery.js"></script>
+<script src="./scripts/angular.js"></script>
+</html>
+<!--
+One of the strongest part of jQuery is to perform DOM Manipulation. 
+Angular team doesn't want to createt this functionality they want to retain it from jQuery
+angular uses a subset of jQuery called jQlite.
+
+Using AngularJS we cannot use Selectors, it supports only the methods from jQuery which performs 
+DOM Manipulations
+
+if jquery is added we can access all the methods, if not we can access only the subset (jQlite) methods
+implemented by AngularJS from jQuery.
+
+//Accessing the DOM using DOM API
+var dom = document.getElementsByTagName('p');
+//Converting DOM Object to jQlite Object
+var jQliteObj = angular.element(dom);
+// with this jQlite object we can access only the methods which performs DOM Operations
+
+In order to use all the jQuery Methods, we need to include jquery.js
+
+Eventhough we include jQuery we are supposed to use angular.element to work with all the jQuery Methods
+jQuery === angular.element
+$ === angular.element
+-->

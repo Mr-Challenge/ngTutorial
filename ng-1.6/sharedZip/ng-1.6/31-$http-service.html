@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular $http inbuilt service</title>
+    <link href="./css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body class="container">
+    <div class="jumbotron">
+        <h2>Retrieve Employees using $http Service</h2>
+    </div>
+    <div data-ng-controller="EmployeeCntrl">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="txtId">Id</label>
+                <input type="text" class="form-control" id="txtId" data-ng-model="employee.id" placeholder="Enter Id">
+            </div>
+            <div class="form-group">
+                <label for="txtName">Name</label>
+                <input type="text" class="form-control" id="txtName" data-ng-model="employee.name" placeholder="Enter Name">
+            </div>
+            <button data-ng-click="addEmployee(employee)" class="btn btn-default">Add Employee</button>
+        </form>
+        <hr>
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="employee in employees">
+                    <td data-ng-bind="employee.id"></td>
+                    <td data-ng-bind="employee.name"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    var app = angular.module('cgApp', []);
+
+    app.factory('EmployeeService',['$http',function($http){
+        return {
+            getAllEmployees:function(){
+                return $http({
+                    method: 'GET',
+                    //it can be replaced later with the original endpoint
+                    url: 'api/employeeGet.json'
+                });
+            },
+            addEmployee:function(employee){
+                return $http.post('api/employeePost.json', employee);
+            }
+        }
+    }]);
+
+    app.controller('EmployeeCntrl', ['$scope','EmployeeService', function ($scope,EmployeeService) {
+        $scope.employees = [];
+
+        $scope.employee = {
+            id:0,
+            name:''
+        };
+        
+        $scope.addEmployee = function(employee){
+            EmployeeService.addEmployee(employee).then(function(response){
+                var employeeAdded = response.data;
+                $scope.employees.push(employeeAdded);
+            });
+        }
+
+        EmployeeService.getAllEmployees().then(function(response){
+            $scope.employees = response.data;
+        });
+    }]);
+
+</script>
+
+</html>

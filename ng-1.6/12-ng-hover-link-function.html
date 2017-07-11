@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>angular custom directive - link function</title>
+    <style>
+        .customStyleOne{
+            background-color: yellow;
+        }
+        .customStyleTwo{
+            background-color: red;
+            color:white;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Angular Custom Directive - Link Function</h1>
+    <hr>
+    <button data-cg-mouse-hover data-custom-style="customStyleOne">Special Button</button>
+    <button data-cg-mouse-enter-leave data-custom-style="customStyleTwo">Another Button</button>
+    
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+   var app = angular.module('cgApp',[]);
+
+   app.directive('cgMouseHover',function(){
+        return {
+            restrict:'A',
+            link:function(scope,element,attrs){
+                //Here scope is root scope, if directive is placed in controller then it takes the child Scope
+                //bind, toggleClass supported by jQlite(subset of jQuery)
+               element.bind('mouseenter mouseleave',function(){
+                    element.toggleClass(attrs.customStyle);
+               });
+            }
+        }
+   });
+
+   app.directive('cgMouseEnterLeave',function(){
+       /*Instead of DDO if directive returns a function then that function is nothing but link function*/
+      return function(s,e,a){
+        e.bind('mouseenter mouseleave',function(){
+            e.toggleClass(a.customStyle);
+        });
+      }
+   });
+
+</script>
+</html>

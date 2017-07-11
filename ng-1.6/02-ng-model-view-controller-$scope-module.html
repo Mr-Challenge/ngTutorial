@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cgApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJs-Model-View-Controller-$scope-Module</title>
+</head>
+<body>
+    <div ng-controller="MyController">
+        Name : {{ name }}<br/>
+        Company Name : {{ companyName }}
+        <hr/>
+        <!-- Prototypal Inheritance -->
+        <!-- Now Another Controller can access MyController Scope(it will be considered as its parent scope) -->
+        <div ng-controller="AnotherController">
+            Name : {{ name }}<br/>
+            Company Name : {{ companyName }}
+        </div>
+    </div>
+</body>
+<script src="./scripts/angular.js"></script>
+<script>
+    /*Creating custom module with no dependency*/
+    var app = angular.module('cgApp',[]);
+
+    /*Main Responsibility  : To build Scope Object*/
+    app.controller('MyController',function($scope){
+        $scope.companyName = 'Capgemini';
+        $scope.name = 'Karthik';
+        console.log('MyController id : '+$scope.$id);
+        console.log('MyController Parent id : '+$scope.$parent.$id); //Root Scope(All Controllers by default derived from the root Scope)
+    });
+
+    app.controller('AnotherController',function($scope){
+        $scope.companyName = 'Microsoft';
+        console.log('AnotherController id : '+$scope.$id);
+        console.log('AnotherController Parent id : '+$scope.$parent.$id); //MyController Scope
+    });
+
+</script>
+</html>
+
+<!--
+    Module : 
+    Java - Package
+    .NET - Namespace
+    JavaScript - Module
+
+    It is used to place the logically related stuff together
+    It will avoid the naming collisions
+
+    IIFE: Immediately invoking Function Expression
+    var Calculator = (function(){
+        return 5;
+    })();
+
+Module
+*******
+var Calculator = (function(){
+  return {
+	add:function(a,b){
+		return a + b;
+    },
+    multiply:function(a,b){
+		return a * b;
+    }
+  };
+})();
+
+Calculator.add(5,6)
+11
+
+Calculator.multiply(5,6)
+30
+
+MV* Frameworks
+**************
+MVC - Model View Controller
+MVVM
+MVP
+
+Model : Any JavaScript object attached to $scope in the controller
+
+Controller : Main Responsibility is to create the $scope object and attach the model to it
+
+$scope : It is JS object which acts like a glue between Controller and View. 
+i.e if any model attached to the $scope it can be accessed in the view.
+
+View : Compiled Html(Compiled by Angular Compiler)
+
+To create a module in Angular
+angular.module('<Module name>',[dependency modules])
+
+ngApp is the default module,so no need to include it as a dependency module.
+
+RootScope is the parent scope for all the controllers
+-->

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>How Angular Works</title>
+</head>
+<body>
+    <h1>How Angular works</h1>
+    <hr/>
+    <h2>{{ name }}</h2>
+</body>
+<script src="./scripts/angular.js"></script>
+</html>
+
+<!--
+function returns another function
+**********************************
+function add(a){
+	return function(b){
+		return  a + b;
+    }
+}
+
+add(5)(6)
+11
+
+How Angular Works
+*****************
+
+//Get DOM object
+var dom = document;
+
+//Create injector Service for Angular Module
+var injector = angular.injector(['ng']);
+
+//Create instance for $compile Service
+var compile = injector.get('$compile');
+
+//Create instance for $rootScope Service
+var rootScope = injector.get('$rootScope');
+
+//Attach model to rootScope
+rootScope.name = 'Karthik';
+"Karthik"
+
+//Compile the DOM against the rootScope
+compile(dom)(rootScope)
+
+//Trigger the Digest Cycle
+rootScope.$apply()
+-->
